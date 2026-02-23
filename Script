@@ -1,0 +1,79 @@
+const TAX_RATE = 0.07;
+const SHIPPING_FLAT = 15;
+
+const productList = document.getElementById("product-list");
+
+function renderProducts() {
+    for (let category in products) {
+        let categoryDiv = document.createElement("div");
+        categoryDiv.innerHTML = `<h3>${category}</h3>`;
+
+        products[category].forEach(product => {
+            let productRow = document.createElement("div");
+            productRow.className = "product-row";
+
+            productRow.innerHTML = `
+                <label>
+                    <input type="number" min="0" value="0"
+                        data-name="${product.name}"
+                        data-price="${product.price}"
+                        onchange="updateTotals()">
+                    ${product.name} - $${product.price}
+                </label>
+            `;
+
+            categoryDiv.appendChild(productRow);
+        });
+
+        productList.appendChild(categoryDiv);
+    }
+}
+
+function updateTotals() {
+    let inputs = document.querySelectorAll("input[type='number']");
+    let subtotal = 0;
+
+    inputs.forEach(input => {
+        let qty = parseInt(input.value) || 0;
+        let price = parseFloat(input.dataset.price);
+        subtotal += qty * price;
+    });
+
+    let tax = subtotal * TAX_RATE;
+    let shipping = subtotal > 0 ? SHIPPING_FLAT : 0;
+    let total = subtotal + tax + shipping;
+
+    document.getElementById("subtotal").innerText = subtotal.toFixed(2);
+    document.getElementById("tax").innerText = tax.toFixed(2);
+    document.getElementById("shipping").innerText = shipping.toFixed(2);
+    document.getElementById("total").innerText = total.toFixed(2);
+}
+
+function generateReceipt() {
+    let receipt = document.getElementById("receipt");
+    receipt.innerHTML = "<h2>Receipt</h2>";
+
+    receipt.innerHTML += `
+        <p><strong>Name:</strong> ${document.getElementById("name").value}</p>
+        <p><strong>Address:</strong> ${document.getElementById("address").value},
+        ${document.getElementById("city").value},
+        ${document.getElementById("state").value}
+        ${document.getElementById("zip").value}</p>
+    `;
+
+    let inputs = document.querySelectorAll("input[type='number']");
+    receipt.innerHTML += "<h3>Items:</h3>";
+
+    inputs.forEach(input => {
+        let qty = parseInt(input.value) || 0;
+        if (qty > 0) {
+            receipt.innerHTML += `<p>${input.dataset.name} x ${qty}</p>`;
+        }
+    });
+
+    receipt.innerHTML += `
+        <p><strong>Total Paid:</strong> $${document.getElementById("total").innerText}</p>
+    `;
+}
+
+renderProducts();
