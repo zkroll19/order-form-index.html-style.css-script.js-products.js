@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Order Form</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>Online Order Form</h1>
+
+<h2>Shipping Information</h2>
+<div class="shipping">
+    <input type="text" id="name" placeholder="Full Name" required>
+    <input type="text" id="address" placeholder="Address Line 1" required>
+    <input type="text" id="city" placeholder="City" required>
+    <input type="text" id="state" placeholder="State" required>
+    <input type="text" id="zip" placeholder="ZIP Code" required>
+</div>
+
+<h2>Products</h2>
+<div id="product-list"></div>
+
+<h2>Order Summary</h2>
+<p>Subtotal: $<span id="subtotal">0.00</span></p>
+<p>Tax (7%): $<span id="tax">0.00</span></p>
+<p>Shipping: $<span id="shipping">0.00</span></p>
+<h3>Total: $<span id="total">0.00</span></h3>
+
+<button onclick="generateReceipt()">Generate Receipt</button>
+
+<div id="receipt"></div>
+
+<script src="products.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
