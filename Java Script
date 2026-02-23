@@ -1,0 +1,13 @@
+const products = {
+    Electronics: [
+        { name: "Laptop", price: 899 },
+        { name: "Monitor", price: 249 }
+    ],
+    Apparel: [
+        { name: "Hoodie", price: 59 },
+        { name: "T-Shirt", price: 29 }
+    ],
+    Accessories: [
+        { name: "Backpack", price: 79 }
+    ]
+};
